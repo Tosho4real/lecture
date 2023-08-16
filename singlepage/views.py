@@ -1,5 +1,7 @@
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
+import time
+import json
 
 # Create your views here.
 
@@ -14,6 +16,7 @@ texts = [
     "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
 ]
 
+
 def practice(request):
     return render(request, "singlepage/practice.html")
 
@@ -23,3 +26,24 @@ def section(request, num):
         return HttpResponse(texts[num - 1])
     else:
         return Http404("No such section")
+
+
+def posts(request):
+    return render(request, "singlepage/posts.html")
+
+
+def post(request):
+    # Get start and end points
+    start = int(request.GET.get("start") or 0)
+    end = int(request.GET.get("end") or (start + 9))
+
+    # Generate list of posts
+    data = []
+    for i in range(start, end + 1):
+        data.append(f"Post #{i}")
+
+    # Artificially delay speed of response
+
+    time.sleep(1)
+
+    return HttpResponse(json.dumps({"posts": data}))

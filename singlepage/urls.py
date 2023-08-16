@@ -8,4 +8,6 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("sections/<int:num>", views.section, name="section"),
     path("scroll", views.practice, name="practice"),
+    path("posts", views.posts, name="posts"),
+    path("post", views.post, name="post"),
 ]
